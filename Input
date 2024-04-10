@@ -1,0 +1,65 @@
+Input code for HiPACE++ simulation of refraction of an electron beam by a plasma lens.
+BL4S 2024
+Team Refractors
+
+
+Constants and parameters
+my_constants.phi_mrad = 0
+
+Simulation settings
+amr.n_cell = 511 511 511
+ amr.blocking_factor = 1
+ amr.max_level = 0
+ max_step = 200
+ diagnostic.output_period = 1
+ hipace.normalized_units = 1
+ hipace.dt = 5
+hipace.output_input = 1
+ beams.insitu_period = 1
+ hipace.bxby_solver = explicit
+ hipace.verbose = 3 
+hipace.MG_tolerance_rel = 1e-4 
+
+
+ geometry.coord_sys = 0
+ geometry.is_periodic = 1 1 0
+ geometry.prob_lo = -6 -6 -12
+ geometry.prob_hi = 6 6 0
+
+Plasma parameters
+ plasmas.names = plasma
+ plasma.element = electron
+ plasma.density(x,y,z) = "if(x<0, 1.0, 0)" #Interface at x = 0
+ plasma.ppc = 7 7
+
+Beam parameters
+ beams.names = beam
+
+ beam.element = electron
+ beam.injection_type = fixed_weight
+ beam.num_particles = 1000000 
+ beam.position_mean = -1.0 0.0 -5.0
+ beam.position_std = 70/376 70/376 630/376
+ beam.density = 4.2475
+ beam.u_mean = 12000*phi_mrad/1000 0.0 12000
+ beam.u_std = 1.0 1.0 0.0 
+
+Diagnostics
+
+
+diagnostic.names = xslice yslice #xyslice1
+xslice.field_data = al
+l xslice.diag_type = xz 
+yslice.field_data = all
+yslice.diag_type = yz
+
+
+
+#xyslice1.field_data = all
+#xyslice1.diag_type = xy_integrated 
+#xyslice1.patch_lo = -6 -6 -1.02
+#xyslice1.patch_hi = 6 6 -0.98
+
+diagnostic.beam_data = beam
+hipace.deposit_rho_individual = 1
+
