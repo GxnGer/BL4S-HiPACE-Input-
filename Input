@@ -4,7 +4,7 @@ Team Refractors
 
 
 Constants and parameters
-my_constants.phi_mrad = 0
+my_constants.phi_mrad = 2
 
 Simulation settings
 amr.n_cell = 511 511 511
